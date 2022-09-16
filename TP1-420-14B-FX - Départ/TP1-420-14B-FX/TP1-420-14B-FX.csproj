@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>TP1_420_14B_FX</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="classes\UtilEnum.cs" />
+    <Compile Remove="enums\CategorieProduit.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="enums\" />
+  </ItemGroup>
+
+</Project>

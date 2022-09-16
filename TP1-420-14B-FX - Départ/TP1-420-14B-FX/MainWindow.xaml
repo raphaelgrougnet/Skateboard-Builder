@@ -1,0 +1,165 @@
+﻿<Window x:Class="TP1_420_14B_FX.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TP1_420_14B_FX"
+        mc:Ignorable="d"
+        Title="Skate Depôt" ResizeMode="NoResize" Height="675" Width="1200" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20" ShowGridLines="false">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+           
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Header="Skateboards" Margin="5,5,5,5">
+            <StackPanel>
+                <ListBox x:Name="lstSkateboards" Height="320" HorizontalAlignment="Stretch"/>
+                <Button x:Name="btnNouveau" Content="Nouveau"  HorizontalAlignment="Stretch"/>
+                <Button x:Name="btnAjouter" Content="Ajouter"/>
+                <Button x:Name="btnDesassembler" Content="Désassembler" />
+                <Button x:Name="btnVendu" Content="Vendu"/>
+                <Button x:Name="btnValeurTotal"  Content="Valeur Totale"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="1" Header="Détails du skateboard" Grid.ColumnSpan="2" Margin="5,5,5,5">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Label Content="Nom"/>
+                        <TextBox  x:Name="txtNomSkateboard" Width="400" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <StackPanel Margin="5 0">
+                        <Label Content="Code"/>
+                        <TextBox  x:Name="txtCodeSkateboard" Width="50" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid Margin="0 5 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0"  Margin="5">
+                        <Label Content="Planche"  HorizontalAlignment="Center" FontWeight="Bold"/>
+                        <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
+                            <Image x:Name="imgPlanche" HorizontalAlignment="Left" Width="98" />
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                        <Label Content="Trucks" HorizontalAlignment="Center"  FontWeight="Bold"/>
+                        <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
+                            <Image x:Name="imgTrucks" />
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
+                        <Label Content="Roues" HorizontalAlignment="Center"  FontWeight="Bold"/>
+                        <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
+                            <Image x:Name="imgRoues" />
+                        </Border>
+                    </StackPanel>
+
+
+
+                    <StackPanel Grid.Row="0" Grid.Column="3" Margin="5">
+                        <Label Content="Grip" HorizontalAlignment="Center"  FontWeight="Bold"/>
+                        <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
+                            <Image x:Name="imgGrip" />
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+
+            </StackPanel>
+
+        </GroupBox>
+
+        <GroupBox x:Name="gpListeProduits" Header="Liste des produis - {Catégorie}" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" Margin="5,5,5,5" >
+            <ListBox x:Name="lstProduits" Width="460"/>
+        </GroupBox>
+
+
+
+        <GroupBox Grid.Row="0" Grid.Column="3" Header="Prix" Margin="5,5,5,5">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Planche" Name="lblNomPlanche" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Width="186"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="999.99 $" Name="lblPrixPlanche" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Trucks" Name="lblNomTrucks"  TextWrapping="WrapWithOverflow"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="999.99 $" Name="lblPrixTrucks" HorizontalAlignment="Right"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Roues" Name="lblNomRoues"  TextWrapping="WrapWithOverflow"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="999.99 $" Name="lblPrixRoues" HorizontalAlignment="Right"/>
+
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Grip" Name="lblNomGrip"  TextWrapping="WrapWithOverflow"/>
+                <Label Grid.Row="3" Grid.Column="1" Content="999.99 $" Name="lblPrixGrip" HorizontalAlignment="Right"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="Réduction" FontWeight="Bold" HorizontalAlignment="Right" Foreground="Green"/>
+                <Label Grid.Row="4" Grid.Column="1" Content="999.99 $" Name="lblMontantReduction" HorizontalAlignment="Right" Foreground="Green"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Content="Prix de vente" FontWeight="Bold" HorizontalAlignment="Right"/>
+                <Label Grid.Row="5" Grid.Column="1" Content="9 999.99 $" Name="lblPrixVente" HorizontalAlignment="Right"/>
+
+            </Grid>
+
+
+
+        </GroupBox>
+        <GroupBox Grid.Row="1" Grid.Column="3" Header="Produit" Margin="5,5,5,5">
+            <DockPanel  VerticalAlignment="Stretch">
+                <Border DockPanel.Dock="Top" CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="125" Height="125" HorizontalAlignment="Left" Margin="5">
+                    <Image x:Name="imgProduit" ></Image>
+                </Border>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  Margin="5" >
+                    <Label Content="Nom :"  Width="75"/>
+                    <TextBlock Name="lblNomProduit" TextWrapping="WrapWithOverflow" Width="175"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  Margin="5">
+                    <Label Content="Prix :" Width="75"/>
+                    <Label Name="lblPrixProduit" Content="999.99"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  Margin="5">
+                    <Label Content="Qte. dispo. :"  Width="75"/>
+                    <Label Name="lblQuantiteProduitDispo" Content="99"/>
+                </StackPanel>
+                <Button DockPanel.Dock="Bottom" x:Name="btnAjouterProduit" Content="Ajouter" VerticalAlignment="Bottom" />
+            </DockPanel>
+        </GroupBox>
+        <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="right" Grid.RowSpan="2">
+            <Button x:Name="btnEnregistrer" Content="Enregistrer" Width="100"/>
+            <Button x:Name="btnQuitter" Content="Quitter" Width="100"/>
+        </StackPanel>
+    </Grid>
+</Window>
