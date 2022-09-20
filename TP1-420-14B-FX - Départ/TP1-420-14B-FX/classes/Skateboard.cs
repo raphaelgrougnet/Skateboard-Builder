@@ -159,7 +159,16 @@ namespace TP1_420_14B_FX.classes
         /// Constructeur avec paramètres permettant de créer un skate avec toutes ses valeurs
         /// </summary>     
         
-        //todo : Implémenter le code du constructeur avec paramètres
+        //todo : Implémenter le code du constructeur avec paramètres FAIT
+        public Skateboard(string code, string nom, Produit planche, Produit trucks, Produit roues, Produit grip)
+        {
+            this.Code = code;
+            this.Nom = nom;
+            this.Planche = planche;
+            this.Trucks = trucks;
+            this.Roues = roues;
+            this.Grip = grip;
+        }
 
         #endregion
 
