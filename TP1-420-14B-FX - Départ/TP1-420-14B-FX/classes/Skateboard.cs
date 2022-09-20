@@ -10,7 +10,9 @@ namespace TP1_420_14B_FX.classes
     public class Skateboard
     {
         #region CONSTANTES ET ATTRIBUTS STATIQUES
-        
+        public const byte NOM_NB_CARACT_MIN = 1;
+        public const byte NOM_NB_CARACT_MAX = 25;
+        public const byte CODE_NB_CARAT = 0;
         #endregion
 
 
@@ -71,8 +73,12 @@ namespace TP1_420_14B_FX.classes
             get { return _nom; }
             private set 
             {
-                //todo : Implémenter la propriété Nom
-                throw new NotImplementedException();
+                //todo : Implémenter la propriété Nom FAIT
+                if (!String.IsNullOrWhiteSpace(value) && !(value.Length > NOM_NB_CARACT_MAX))
+                {
+                    _nom = value;
+                }
+                
             }
         }
 
@@ -80,7 +86,16 @@ namespace TP1_420_14B_FX.classes
         /// Obtient ou définit le prix de vente du skate
         /// </summary>
         
-        //todo : Implementer la propriété prix de vente
+        //todo : Implementer la propriété prix de vente FAIT
+        public decimal PrixVente
+        {
+            get
+            {
+                decimal prixAvantReduc = _grip.Prix + _planche.Prix + _trucks.Prix + _roues.Prix;
+                decimal prixApresReduc = prixAvantReduc - (prixAvantReduc * (decimal).1);
+                return prixApresReduc;
+            }
+        }
 
         /// <summary>
         /// Obtient ou définit le griptape composant le skate

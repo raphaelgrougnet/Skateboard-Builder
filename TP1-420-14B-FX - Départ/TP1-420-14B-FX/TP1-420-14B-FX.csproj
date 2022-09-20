@@ -9,11 +9,6 @@
 
   <ItemGroup>
     <Compile Remove="classes\UtilEnum.cs" />
-    <Compile Remove="enums\CategorieProduit.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="enums\" />
   </ItemGroup>
 
 </Project>

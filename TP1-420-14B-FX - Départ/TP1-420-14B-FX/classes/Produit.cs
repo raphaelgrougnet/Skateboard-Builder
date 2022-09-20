@@ -1,4 +1,5 @@
 ﻿using System;
+using TP1_420_14B_FX.enums;
 
 
 namespace TP1_420_14B_FX.classes
@@ -28,7 +29,8 @@ namespace TP1_420_14B_FX.classes
         /// <summary>
         /// Catégorie du produit
         /// </summary>
-        //todo : Créer l'attribut pour la catégorie
+        //todo : Créer l'attribut pour la catégorie FAIT
+        private CategorieProduit _categorie;
 
         /// <summary>
         /// Quantité disponible en inventaire
@@ -70,7 +72,12 @@ namespace TP1_420_14B_FX.classes
         /// <summary>
         /// Catégorie à laquelle appartient le produit
         /// </summary>
-        //Todo : implémenter la propriété pour la catégorie
+        //Todo : implémenter la propriété pour la catégorie FAIT
+        public CategorieProduit Categorie
+        {
+            get { return _categorie; }
+            private set { _categorie = value; }
+        }
 
         /// <summary>
         /// Quantité disponible du produit en inventaire
@@ -108,7 +115,16 @@ namespace TP1_420_14B_FX.classes
         /// <summary>
         /// Permet de construire un produit avec toutes ses valeurs.
         /// </summary>
-        //todo : Implémenter le constructeur avec paramètres de la classe.
+        //todo : Implémenter le constructeur avec paramètres de la classe. FAIT
+        public Produit(CategorieProduit categorie, uint code, string image, string nom, decimal prix, byte quantiteDispo)
+        {
+            this.Categorie = categorie;
+            this.Code = code;
+            this.Image = image;
+            this.Nom = nom;
+            this.Prix = prix;
+            this.QuantiteDispo = quantiteDispo;
+        }
 
         #endregion
 
@@ -121,8 +137,14 @@ namespace TP1_420_14B_FX.classes
        /// <returns>true si au moins un exemplaire du produit existe dans l'inventaire</returns>
         public bool RetirerQuantiteInventaire(byte quantite)
         {
-            //todo : Implémenter la méthode RetirerQuantiteInventaire
-            throw new NotImplementedException();
+            //todo : Implémenter la méthode RetirerQuantiteInventaire FAIT
+            if (QuantiteDispo >= quantite)
+            {
+                QuantiteDispo -= quantite;
+                return true;
+            }
+            return false;
+            
         }
 
         /// <summary>
@@ -131,8 +153,9 @@ namespace TP1_420_14B_FX.classes
         /// <param name="quantite">Quantité à ajouter</param>
         public void AjouterQuantiteInventaire(byte quantite)
         {
-            //todo : Implémenter la méthode AjouterQuantiteInventaire
-            throw new NotImplementedException();
+            //todo : Implémenter la méthode AjouterQuantiteInventaire FAIT
+            QuantiteDispo += quantite;
+            
         }
 
         /// <summary>
@@ -142,8 +165,9 @@ namespace TP1_420_14B_FX.classes
         public override string ToString()
         {
 
-            //todo : Implémenter la méthode ToString
-            throw new NotImplementedException();
+            //todo : Implémenter la méthode ToString FAIT
+            return this.Nom;
+            
         }
 
         #endregion
