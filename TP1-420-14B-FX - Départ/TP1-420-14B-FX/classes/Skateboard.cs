@@ -91,9 +91,8 @@ namespace TP1_420_14B_FX.classes
         {
             get
             {
-                decimal prixAvantReduc = _grip.Prix + _planche.Prix + _trucks.Prix + _roues.Prix;
-                decimal prixApresReduc = prixAvantReduc - (prixAvantReduc * (decimal).1);
-                return prixApresReduc;
+                decimal prixVente = CalculerPrixVente();
+                return prixVente;
             }
         }
 
@@ -179,8 +178,11 @@ namespace TP1_420_14B_FX.classes
         /// <returns>Le prix de vente du skate</returns>
         private decimal CalculerPrixVente()
         {
+
             //todo : Implémenter la métode CalculerPrixVente
-            throw new NotImplementedException();
+            decimal prixAvantReduc = _grip.Prix + _planche.Prix + _trucks.Prix + _roues.Prix;
+            decimal prixApresReduc = prixAvantReduc - (prixAvantReduc * (decimal).1);
+            return prixApresReduc;
         }
 
         /// <summary>
