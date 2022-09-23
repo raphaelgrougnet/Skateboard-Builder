@@ -179,7 +179,7 @@ namespace TP1_420_14B_FX.classes
         private decimal CalculerPrixVente()
         {
 
-            //todo : Implémenter la métode CalculerPrixVente
+            //todo : Implémenter la métode CalculerPrixVente FAIT
             decimal prixAvantReduc = _grip.Prix + _planche.Prix + _trucks.Prix + _roues.Prix;
             decimal prixApresReduc = prixAvantReduc - (prixAvantReduc * (decimal).1);
             return prixApresReduc;
@@ -192,8 +192,39 @@ namespace TP1_420_14B_FX.classes
         /// <returns>true si le produit existe comme composante du skate; false sinon</returns>
         public bool PossedeProduit(Produit produit)
         {
-            //todo : Implémenter la méthode PossedeProduit
-            throw new NotImplementedException();
+            //todo : Implémenter la méthode PossedeProduit FAIT
+            switch (produit.Categorie)
+            {
+                case enums.CategorieProduit.Decks:
+                    if (produit == this.Planche)
+                    {
+                        return true;
+                    }
+                    break;
+                case enums.CategorieProduit.Truck:
+                    if (produit == this.Trucks)
+                    {
+                        return true;
+                    }
+                    break;
+                case enums.CategorieProduit.Wheels:
+                    if (produit == this.Roues)
+                    {
+                        return true;
+                    }
+                    break;
+                case enums.CategorieProduit.GripTape:
+                    if (produit == this.Grip)
+                    {
+                        return true;
+                    }
+                    break;
+                
+            }
+
+
+
+            return false;
         }
 
         /// <summary>
@@ -203,8 +234,11 @@ namespace TP1_420_14B_FX.classes
         public override string ToString()
         {
 
-            //todo : Implémenter la méthode ToSTring
-            throw new NotImplementedException();
+            //todo : Implémenter la méthode ToSTring FAIT
+            Random aleatoire = new Random();
+            string nom = String.Format("{0}{1}{2}{3}{4}", this.Planche.Nom[0], this.Grip.Nom[0], this.Roues.Nom[0], this.Trucks.Nom[0], aleatoire.Next(1,100));
+            return nom;
+            
         }
 
         #endregion

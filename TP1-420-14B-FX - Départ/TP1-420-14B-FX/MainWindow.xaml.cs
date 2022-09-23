@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using TP1_420_14B_FX.enums;
+using TP1_420_14B_FX.classes;
 
 
 
@@ -62,20 +64,23 @@ namespace TP1_420_14B_FX
             txtCodeSkateboard.Text = "";
 
             imgPlanche.Tag = null;
-            //todo : Ajouter l'image par défaut d'une plache "deck.png"
+            //todo : Ajouter l'image par défaut d'une plache "deck.png" FAIT
+            imgPlanche.Source = new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\deck.png"));
             imgPlanche.IsEnabled = true;
 
             imgTrucks.Tag = null;
-            //todo : Ajouter l'image par défaut des trucks "trucks.png"
+            //todo : Ajouter l'image par défaut des trucks "trucks.png" FAIT
             imgTrucks.IsEnabled = true;
-
+            new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\trucks.png"));
             imgRoues.Tag = null;
-            //todo : Ajouter l'image par défaut des trucks "wheels.png"
+            //todo : Ajouter l'image par défaut des trucks "wheels.png" FAIT
+            new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\wheels.png"));
             imgRoues.IsEnabled = true;
 
 
             imgGrip.Tag = null;
-            //todo : Ajouter l'image par défaut des trucks "grip.png"
+            //todo : Ajouter l'image par défaut des trucks "grip.png" FAIT
+            new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\grip.png"));
             imgGrip.IsEnabled = true;
 
             lblNomPlanche.Text = "";
@@ -103,7 +108,17 @@ namespace TP1_420_14B_FX
         /// </summary>
         private void AfficherListeSkateboards()
         {
+            string[] vectDonnees = Utilitaire.ChargerDonnees(@"C:\data-420-14B-FX\skateboards.csv");
+            string[] vectDonneesDonnees;
+            Skateboard[] vectSkates = new Skateboard[vectDonnees.Length - 1];
+            for (int i = 0; i < vectSkates.Length; i++)
+            {
+                vectDonneesDonnees = vectDonnees[i].Split(';');
+                vectSkates[i] = new Skateboard(vectDonneesDonnees[0], vectDonneesDonnees[1], new Produit(CategorieProduit.Decks, vectDonneesDonnees[2],));
+            }
+            
             //todo : Implementer la méthode AfficherListeSkateboards
+            
             throw new NotImplementedException();
         }
 
