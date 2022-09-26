@@ -76,7 +76,23 @@ namespace TP1_420_14B_FX.classes
             return vectProduits;
         }
 
+        public Produit RechercherProduit(uint codeProduit)
+        {
+            Produit[] vectProduits = ChargerProduits();
+            for (int i = 0; i < vectProduits.Length; i++)
+            {
+                if (codeProduit == vectProduits[i].Code)
+                {
+                    return vectProduits[i];
+                }
+            }
 
+            return null;
+        }
+
+
+
+        // new Produit(CategorieProduit.Decks, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Code, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Image, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Nom, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Prix, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].QuantiteDispo)
         public Skateboard[] ChargerSkateboards()
         {
             string[] vectSkatebaordsString = Utilitaire.ChargerDonnees(CHEMIN_FICHIERS_SKATEBOARDS);
@@ -86,10 +102,7 @@ namespace TP1_420_14B_FX.classes
             for (int i = 1; i < vectSkatebaordsString.Length-1; i++)
             {
                 vectSkateboardsVect = vectSkatebaordsString[i].Split(';');
-                vectSkateboards[i] = new Skateboard(vectSkateboardsVect[0], vectSkateboardsVect[1], new Produit(CategorieProduit.Decks, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Code, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Image, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Nom, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Prix, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].QuantiteDispo),
-                                                                                                    new Produit(CategorieProduit.Truck, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Code, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Image, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Nom, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Prix, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].QuantiteDispo),
-                                                                                                    new Produit(CategorieProduit.Wheels, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Code, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Image, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Nom, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Prix, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].QuantiteDispo),
-                                                                                                    new Produit(CategorieProduit.GripTape, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Code, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Image, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Nom, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Prix, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].QuantiteDispo));
+                vectSkateboards[i] = new Skateboard(vectSkateboardsVect[0], vectSkateboardsVect[1], RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[2])), RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[3])), RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[4])), RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[5])));
             }
 
             return vectSkateboards;
