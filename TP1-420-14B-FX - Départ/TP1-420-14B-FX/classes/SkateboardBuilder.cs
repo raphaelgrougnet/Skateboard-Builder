@@ -36,7 +36,7 @@ namespace TP1_420_14B_FX.classes
 
         #region CONSTRUCTEURS
         SkateboardBuilder()
-            //TODO CONSTRUCTEUR SKATEBOARD BUILDER A FAIRE, DEMANDER AU PROF QUOI FAIRE, SI IL FAUT ATTRIBUIER A produits  LA FONCTION CHARCHER PRODUITS
+            
         {
             this.Produits = ChargerProduits();
             this.Skateboards = ChargerSkateboards();
@@ -44,7 +44,11 @@ namespace TP1_420_14B_FX.classes
         #endregion
 
         #region MÉTHODES
-        public Produit[] ChargerProduits()
+        /// <summary>
+        /// Permet d'obtenir un vecteur de produits qui sera créé à partir des données contenues dans le fichier des produits.
+        /// </summary>
+        /// <returns>Vecteur de produits</returns>
+        private Produit[] ChargerProduits()
         {
             string[] vectProduitsString = Utilitaire.ChargerDonnees(CHEMIN_FICHIERS_PRODUITS);
             Produit[] vectProduits = new Produit[vectProduitsString.Length - 1]; //Retire la première ligne
@@ -71,11 +75,16 @@ namespace TP1_420_14B_FX.classes
                 }
                 
                 vectProduits[i] = new Produit(categorie,Convert.ToUInt32(vectProduitsVect[0]),vectProduitsVect[5],vectProduitsVect[1],Convert.ToDecimal(vectProduitsVect[4]), Convert.ToByte(vectProduitsVect[3]));
-
+                
             }
             return vectProduits;
         }
 
+        /// <summary>
+        /// Permet de recherche un produit en fonction de son numéro d'identification (code).
+        /// </summary>
+        /// <param name="codeProduit">Code du produit à rechercher</param>
+        /// <returns>null si aucun produit ne correspond au numéro d'identification, sinon le produit.</returns>
         public Produit RechercherProduit(uint codeProduit)
         {
             Produit[] vectProduits = ChargerProduits();
@@ -93,7 +102,12 @@ namespace TP1_420_14B_FX.classes
 
 
         // new Produit(CategorieProduit.Decks, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Code, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Image, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Nom, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].Prix, vectProduits[Convert.ToInt32(vectSkateboardsVect[2])].QuantiteDispo)
-        public Skateboard[] ChargerSkateboards()
+
+        /// <summary>
+        /// Permet d'obtenir un vecteur de skateboards qui sera créé à partir des données contenues dans le fichier des skateboards.
+        /// </summary>
+        /// <returns>Vecteur de skateboards</returns>
+        private Skateboard[] ChargerSkateboards()
         {
             string[] vectSkatebaordsString = Utilitaire.ChargerDonnees(CHEMIN_FICHIERS_SKATEBOARDS);
             Skateboard[] vectSkateboards = new Skateboard[vectSkatebaordsString.Length - 1]; //Retire la première ligne
@@ -106,6 +120,210 @@ namespace TP1_420_14B_FX.classes
             }
 
             return vectSkateboards;
+        }
+
+        /// <summary>
+        /// Permet l'ajout d'un skateboard au vecteur de skateboards. De plus, ajuste    la quantité disponible de chaque produit composant le skateboard.
+        /// </summary>
+        /// <param name="nom">Nom du skateboard</param>
+        /// <param name="planche">Objet planche du skateboard</param>
+        /// <param name="trucks">Objet trucks du skateboard</param>
+        /// <param name="roues">Objet roues du skateboard</param>
+        /// <param name="grip">Objet grip du skateboard</param>
+        /// <returns>Vrai si le skateboard a bien été ajouté. Sinon retourne faux.</returns>
+        public bool AjouterSkateboard(string nom, Produit planche, Produit trucks, Produit roues, Produit grip)
+        {
+            Skateboard[] vectSkateboardsBase = this.Skateboards;
+            Skateboard[] vectSkateboardsNew = new Skateboard[vectSkateboardsBase.Length];
+            for (int i = 0; i < vectSkateboardsBase.Length-1; i++)
+            {
+                vectSkateboardsNew[i] = vectSkateboardsBase[i];
+            }
+            Random aleatoire = new Random();
+            int nb_Aleatoire;
+
+            string code; 
+            do
+            {
+                nb_Aleatoire = aleatoire.Next(1, 100);
+                code=string.Format("{0}{1}{2}{3}{4}", planche.Nom[0], trucks.Nom[0], roues.Nom[0], grip.Nom[0], nb_Aleatoire);
+            } while (ValiderCode(code));
+
+            if (VerifierDoublon(planche,trucks,roues,grip) == null)
+            {
+                vectSkateboardsNew[vectSkateboardsNew.Length - 1] = new Skateboard(code, nom, planche, trucks, roues, grip);
+                planche.RetirerQuantiteInventaire(1);
+                trucks.RetirerQuantiteInventaire(1);
+                roues.RetirerQuantiteInventaire(1);
+                grip.RetirerQuantiteInventaire(1);
+            }
+            
+
+            
+            if (!(vectSkateboardsNew[vectSkateboardsNew.Length-1] == null))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Permet de vérifier si le code d’un skateboard existe déjà dans les skateboards assemblés.
+        /// </summary>
+        /// <param name="code">Code du skateboard à valider</param>
+        /// <returns>Vrai si le code n’existe pas et faux si celui-ci existe déjà.</returns>
+        private bool ValiderCode(string code)
+        {
+            for (int i = 0; i < Skateboards.Length; i++)
+            {
+                if (Skateboards[i].Code == code)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Méthode permettant de vérifier s'il existe un skateboard possédant déjà les même composantes.
+        /// </summary>
+        /// <param name="planche">Objet Planche</param>
+        /// <param name="trucks">Objet Trucks</param>
+        /// <param name="roues">Objet Roues</param>
+        /// <param name="grip">Objet Grip</param>
+        /// <returns>Retourne le skateboard trouvé ou null s'il n'existe aucun skateboard identique.</returns>
+        public Skateboard VerifierDoublon(Produit planche, Produit trucks, Produit roues, Produit grip)
+        {
+            for (int i = 0; i < Skateboards.Length; i++)
+            {
+                if (Skateboards[i].Planche == planche)
+                {
+                    if (Skateboards[i].Trucks == trucks)
+                    {
+                        if (Skateboards[i].Roues == roues)
+                        {
+                            if (Skateboards[i].Grip == grip)
+                            {
+                                return Skateboards[i];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Permet de supprimer un skateboard du vecteur de skateboards assemblés.
+        /// </summary>
+        /// <param name="skateboard">Skateboard à supprimer</param>
+        /// <returns>Retourne vrai si le skateboard a bien été retiré de la liste. Sinon retourne faux.</returns>
+        public bool SupprimerSkateboard(Skateboard skateboard)
+        {
+            Skateboard[] vectSkateboardsBase = this.Skateboards;
+            Skateboard[] vectSkateboardsNew = new Skateboard[vectSkateboardsBase.Length-1];
+            bool valide = true;
+            for (int i = 0; i < vectSkateboardsBase.Length; i++)
+            {
+                if (skateboard.Code == vectSkateboardsBase[i].Code)
+                {
+                    vectSkateboardsBase[i] = null;
+                }
+            }
+            int incrementeur = 0;
+            for (int i = 0; i < vectSkateboardsBase.Length; i++)
+            {
+
+                if (vectSkateboardsBase[i] != null)
+                {
+                    vectSkateboardsNew[incrementeur] = vectSkateboardsBase[i];
+                }
+                incrementeur++;
+            }
+            for (int i = 0; i < vectSkateboardsNew.Length; i++)
+            {
+                if (vectSkateboardsNew[i] == null)
+                {
+                    valide = false;
+                }
+            }
+
+            return valide;
+            
+        }
+
+        /// <summary>
+        /// Permet de désassembler un skateboard lorsque celui-ci ne se vend pas. Ainsi, chaque composante du skateboard est retournée à l'inventaire des produits et le skateboard est supprimé.
+        /// </summary>
+        /// <param name="skateboard">Skateboard à désassembler</param>
+        /// <returns>Retourne vrai si bien été désassemblé, sinon faux.</returns>
+        public bool DesassemblerSkateboard(Skateboard skateboard)
+        {
+            skateboard.Trucks.AjouterQuantiteInventaire(1);
+            skateboard.Roues.AjouterQuantiteInventaire(1);
+            skateboard.Grip.AjouterQuantiteInventaire(1);
+            skateboard.Trucks.AjouterQuantiteInventaire(1);
+            return SupprimerSkateboard(skateboard);
+        }
+
+        /// <summary>
+        /// Permet de calculer la valeur des skateboards assemblés.
+        /// </summary>
+        /// <returns>Valeur total des Skateboards</returns>
+        public decimal CalculerValTotalSkateboards()
+        {
+            decimal valTotal = 0;
+            for (int i = 0; i < Skateboards.Length; i++)
+            {
+                valTotal += Skateboards[i].PrixVente;
+            }
+            return valTotal;
+        }
+
+        /// <summary>
+        /// Permet d'enregistrer les produits dans le fichier des produits.
+        /// </summary>
+        public void EnregistrerProduit()
+        {
+            string donnees = "Code;Nom;Categorie;Quantite;Prix;Image\n";
+            for (int i = 0; i < Produits.Length; i++)
+            {
+                string categorie = "";
+                switch (Produits[i].Categorie)
+                {
+                    case CategorieProduit.Decks:
+                        categorie = "Decks";
+                        break;
+                    case CategorieProduit.Truck:
+                        categorie = "Trucks";
+                        break;
+                    case CategorieProduit.Wheels:
+                        categorie = "Wheels";
+                        break;
+                    case CategorieProduit.GripTape:
+                        categorie = "GripTape";
+                        break;
+                    
+                }
+                donnees += String.Format("{0};{1};{2};{3};{4};{5}\n",Produits[i].Code, Produits[i].Nom, categorie, Produits[i].QuantiteDispo, Produits[i].Prix.ToString().Replace(",","."), Produits[i].Image);
+            }
+
+            Utilitaire.EnregistrerDonnees(CHEMIN_FICHIERS_PRODUITS, donnees);
+        }
+
+        /// <summary>
+        /// Permet d'enregistrer les skateboards assemblés dans le fichier des skateboards.
+        /// </summary>
+        public void EnregistrerSkateboard()
+        {
+            string donnees = "Code;Nom;Planche;Trucks;Roues;Griptape\n";
+            for (int i = 0; i < Skateboards.Length; i++)
+            {
+                donnees += String.Format("{0};{1};{2};{3};{4};{5}\n", Skateboards[i].Code, Skateboards[i].Nom, Skateboards[i].Planche, Skateboards[i].Trucks, Skateboards[i].Roues, Skateboards[i].Grip);
+            }
+
+            Utilitaire.EnregistrerDonnees(CHEMIN_FICHIERS_SKATEBOARDS, donnees);
         }
         #endregion
 
