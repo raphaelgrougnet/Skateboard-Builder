@@ -6,7 +6,7 @@ using TP1_420_14B_FX.enums;
 
 namespace TP1_420_14B_FX.classes
 {
-    class SkateboardBuilder
+    public class SkateboardBuilder
     {
 
         #region CONSTANTES
@@ -35,7 +35,7 @@ namespace TP1_420_14B_FX.classes
         #endregion
 
         #region CONSTRUCTEURS
-        SkateboardBuilder()
+        public SkateboardBuilder()
             
         {
             this.Produits = ChargerProduits();

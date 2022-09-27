@@ -18,11 +18,14 @@ namespace TP1_420_14B_FX
 
         #region CONSTANTES
 
+        public const string CHEMIN_DOSSIER_IMAGE = @"C:\data-420-14B-FX\images\";
+
         #endregion
 
         #region ATTRIBUTS
 
-      
+        private SkateboardBuilder _skateBoardBuilder = new SkateboardBuilder();
+
         #endregion
 
         #region PROPRIÉTÉS ET INDEXEURS
@@ -48,8 +51,18 @@ namespace TP1_420_14B_FX
         /// </summary>
         private void InitialiserFormulaire()
         {
-            //todo: Implémenter la méthode InitialiserFormulaire
-            throw new NotImplementedException();
+            //todo: Implémenter la méthode InitialiserFormulaire FAIT
+            btnNouveau.IsEnabled = true;
+            btnAjouter.IsEnabled = true;
+
+            btnDesassembler.IsEnabled = false;
+            btnVendu.IsEnabled = false;
+            btnValeurTotal.IsEnabled = true;
+
+            btnAjouterProduit.IsEnabled = false;
+            btnEnregistrer.IsEnabled = true;
+            btnQuitter.IsEnabled = true;
+            
 
         }
 
@@ -65,22 +78,22 @@ namespace TP1_420_14B_FX
 
             imgPlanche.Tag = null;
             //todo : Ajouter l'image par défaut d'une plache "deck.png" FAIT
-            imgPlanche.Source = new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\deck.png"));
+            imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE+"deck.png"));
             imgPlanche.IsEnabled = true;
 
             imgTrucks.Tag = null;
             //todo : Ajouter l'image par défaut des trucks "trucks.png" FAIT
             imgTrucks.IsEnabled = true;
-            new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\trucks.png"));
+            imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + "trucks.png"));
             imgRoues.Tag = null;
             //todo : Ajouter l'image par défaut des trucks "wheels.png" FAIT
-            new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\wheels.png"));
+            imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + "wheels.png"));
             imgRoues.IsEnabled = true;
 
 
             imgGrip.Tag = null;
             //todo : Ajouter l'image par défaut des trucks "grip.png" FAIT
-            new BitmapImage(new Uri(@"C:\data-420-14B-FX\images\grip.png"));
+            imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + "grip.png"));
             imgGrip.IsEnabled = true;
 
             lblNomPlanche.Text = "";
@@ -108,18 +121,17 @@ namespace TP1_420_14B_FX
         /// </summary>
         private void AfficherListeSkateboards()
         {
-            string[] vectDonnees = Utilitaire.ChargerDonnees(@"C:\data-420-14B-FX\skateboards.csv");
-            string[] vectDonneesDonnees;
-            Skateboard[] vectSkates = new Skateboard[vectDonnees.Length - 1];
-            for (int i = 0; i < vectSkates.Length; i++)
+            
+            for (int i = 0; i < _skateBoardBuilder.Skateboards.Length; i++)
             {
-                vectDonneesDonnees = vectDonnees[i].Split(';');
-                vectSkates[i] = new Skateboard(vectDonneesDonnees[0], vectDonneesDonnees[1], new Produit(CategorieProduit.Decks, vectDonneesDonnees[2],));
+                lstSkateboards.Items.Add(_skateBoardBuilder.Skateboards[i]);
             }
+
             
-            //todo : Implementer la méthode AfficherListeSkateboards
+
+            //todo : Implementer la méthode AfficherListeSkateboards FAIT
             
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
@@ -141,8 +153,27 @@ namespace TP1_420_14B_FX
         /// <param name="categorie">Catégorie de produit à afficher</param>
         private void AfficherProduitsCategorie(CategorieProduit categorie)
         {
-            //todo : Implémenter la méthode AfficherProduitsCatégories
-            throw new NotImplementedException();
+            //todo : Implémenter la méthode AfficherProduitsCatégories FAIT
+            for (int i = 0; i < _skateBoardBuilder.Produits.Length; i++)
+            {
+                switch (_skateBoardBuilder.Produits[i].Categorie)
+                {
+                    case CategorieProduit.Decks:
+                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
+                        break;
+                    case CategorieProduit.Truck:
+                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
+                        break;
+                    case CategorieProduit.Wheels:
+                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
+                        break;
+                    case CategorieProduit.GripTape:
+                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
+                        break;
+                    
+                }
+            }
+            
         }
 
 
