@@ -154,7 +154,7 @@
                     <Label Content="Qte. dispo. :"  Width="75"/>
                     <Label Name="lblQuantiteProduitDispo" Content="99"/>
                 </StackPanel>
-                <Button DockPanel.Dock="Bottom" x:Name="btnAjouterProduit" Content="Ajouter" VerticalAlignment="Bottom" />
+                <Button DockPanel.Dock="Bottom" x:Name="btnAjouterProduit" Content="Ajouter" VerticalAlignment="Bottom" Click="btnAjouterProduit_Click" />
             </DockPanel>
         </GroupBox>
         <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="right" Grid.RowSpan="2">

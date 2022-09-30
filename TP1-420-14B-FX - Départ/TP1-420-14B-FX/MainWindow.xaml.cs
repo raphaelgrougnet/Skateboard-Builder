@@ -270,5 +270,13 @@ namespace TP1_420_14B_FX
         {
             InitialiserFormulaire();
         }
+
+        private void btnAjouterProduit_Click(object sender, RoutedEventArgs e)
+        {
+            if (validerSkateboard())
+            {
+                _skateBoardBuilder.AjouterSkateboard(txtNomSkateboard.Text, (Produit)imgPlanche.Tag, (Produit)imgTrucks.Tag, (Produit)imgRoues.Tag, (Produit)imgGrip.Tag);
+            }
+        }
     }
 }
