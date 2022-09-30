@@ -236,7 +236,8 @@ namespace TP1_420_14B_FX.classes
 
             //todo : Implémenter la méthode ToSTring FAIT
             Random aleatoire = new Random();
-            string nom = String.Format("{0}{1}{2}{3}{4}", this.Planche.Nom[0], this.Grip.Nom[0], this.Roues.Nom[0], this.Trucks.Nom[0], aleatoire.Next(1,100));
+            string nom = String.Format("{0}{1}{2}{3}{4}", this.Planche.Nom[1], this.Grip.Nom[1], this.Roues.Nom[1], this.Trucks.Nom[1], aleatoire.Next(1,100));
+            nom = this.Nom;
             return nom;
             
         }

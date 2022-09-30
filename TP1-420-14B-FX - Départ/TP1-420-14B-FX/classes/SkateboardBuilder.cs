@@ -73,8 +73,15 @@ namespace TP1_420_14B_FX.classes
                         break;
                     
                 }
+
+                uint code = Convert.ToUInt32(vectProduitsVect[0]);
+                string img = vectProduitsVect[5];
+                string nom = vectProduitsVect[1];
+                decimal prix = Decimal.Parse(vectProduitsVect[4].Replace('.',','));
+                byte qteDispo = Convert.ToByte(vectProduitsVect[3]);
+
                 
-                vectProduits[i] = new Produit(categorie,Convert.ToUInt32(vectProduitsVect[0]),vectProduitsVect[5],vectProduitsVect[1],Convert.ToDecimal(vectProduitsVect[4]), Convert.ToByte(vectProduitsVect[3]));
+                vectProduits[i] = new Produit(categorie,code,img,nom,prix,qteDispo);
                 
             }
             return vectProduits;
@@ -88,7 +95,7 @@ namespace TP1_420_14B_FX.classes
         public Produit RechercherProduit(uint codeProduit)
         {
             Produit[] vectProduits = ChargerProduits();
-            for (int i = 0; i < vectProduits.Length; i++)
+            for (int i = 1; i < vectProduits.Length; i++)
             {
                 if (codeProduit == vectProduits[i].Code)
                 {

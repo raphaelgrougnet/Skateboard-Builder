@@ -51,7 +51,7 @@ namespace TP1_420_14B_FX.classes
 
                     for (int i = 0; i < vectDonnees.Length; i++)
                     {
-                        vectDonnees[i] = vectLignes[i];
+                        vectDonnees[i] = vectLignes[i+1];
                     }
 
                     // On retourne le vecteur contenant les données créé.
