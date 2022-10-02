@@ -21,12 +21,12 @@
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Header="Skateboards" Margin="5,5,5,5">
             <StackPanel>
-                <ListBox x:Name="lstSkateboards" Height="320" HorizontalAlignment="Stretch"/>
-                <Button x:Name="btnNouveau" Content="Nouveau"  HorizontalAlignment="Stretch"/>
-                <Button x:Name="btnAjouter" Content="Ajouter"/>
-                <Button x:Name="btnDesassembler" Content="Désassembler" />
-                <Button x:Name="btnVendu" Content="Vendu"/>
-                <Button x:Name="btnValeurTotal"  Content="Valeur Totale"/>
+                <ListBox x:Name="lstSkateboards" Height="320" HorizontalAlignment="Stretch" SelectionChanged="lstSkateboards_SelectionChanged"/>
+                <Button x:Name="btnNouveau" Content="Nouveau"  HorizontalAlignment="Stretch" Click="btnNouveau_Click"/>
+                <Button x:Name="btnAjouter" Content="Ajouter" Click="btnAjouter_Click"/>
+                <Button x:Name="btnDesassembler" Content="Désassembler" Click="btnDesassembler_Click" />
+                <Button x:Name="btnVendu" Content="Vendu" Click="btnVendu_Click"/>
+                <Button x:Name="btnValeurTotal"  Content="Valeur Totale" Click="btnValeurTotal_Click"/>
             </StackPanel>
         </GroupBox>
 
@@ -57,21 +57,21 @@
                     <StackPanel Grid.Row="0" Grid.Column="0"  Margin="5">
                         <Label Content="Planche"  HorizontalAlignment="Center" FontWeight="Bold"/>
                         <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
-                            <Image x:Name="imgPlanche" HorizontalAlignment="Left" Width="98" />
+                            <Image x:Name="imgPlanche" HorizontalAlignment="Left" Width="98" MouseDown="imgPlanche_MouseDown" />
                         </Border>
                     </StackPanel>
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
                         <Label Content="Trucks" HorizontalAlignment="Center"  FontWeight="Bold"/>
                         <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
-                            <Image x:Name="imgTrucks" />
+                            <Image x:Name="imgTrucks" MouseDown="imgTrucks_MouseDown" />
                         </Border>
                     </StackPanel>
 
                     <StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
                         <Label Content="Roues" HorizontalAlignment="Center"  FontWeight="Bold"/>
                         <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
-                            <Image x:Name="imgRoues" />
+                            <Image x:Name="imgRoues" MouseDown="imgRoues_MouseDown" />
                         </Border>
                     </StackPanel>
 
@@ -80,7 +80,7 @@
                     <StackPanel Grid.Row="0" Grid.Column="3" Margin="5">
                         <Label Content="Grip" HorizontalAlignment="Center"  FontWeight="Bold"/>
                         <Border CornerRadius="5"  BorderBrush="Black" BorderThickness="1" Width="100" Height="100">
-                            <Image x:Name="imgGrip" />
+                            <Image x:Name="imgGrip" MouseDown="imgGrip_MouseDown" />
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -91,7 +91,7 @@
         </GroupBox>
 
         <GroupBox x:Name="gpListeProduits" Header="Liste des produis - {Catégorie}" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" Margin="5,5,5,5" >
-            <ListBox x:Name="lstProduits" Width="460"/>
+            <ListBox x:Name="lstProduits" Width="460" SelectionChanged="lstProduits_SelectionChanged"/>
         </GroupBox>
 
 
@@ -158,8 +158,8 @@
             </DockPanel>
         </GroupBox>
         <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="right" Grid.RowSpan="2">
-            <Button x:Name="btnEnregistrer" Content="Enregistrer" Width="100"/>
-            <Button x:Name="btnQuitter" Content="Quitter" Width="100"/>
+            <Button x:Name="btnEnregistrer" Content="Enregistrer" Width="100" Click="btnEnregistrer_Click"/>
+            <Button x:Name="btnQuitter" Content="Quitter" Width="100" Click="btnQuitter_Click"/>
         </StackPanel>
     </Grid>
 </Window>

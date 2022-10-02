@@ -180,7 +180,7 @@ namespace TP1_420_14B_FX.classes
         {
 
             //todo : Implémenter la métode CalculerPrixVente FAIT
-            decimal prixAvantReduc = _grip.Prix + _planche.Prix + _trucks.Prix + _roues.Prix;
+            decimal prixAvantReduc = Grip.Prix + Planche.Prix + Trucks.Prix + Roues.Prix;
             decimal prixApresReduc = prixAvantReduc - (prixAvantReduc * (decimal).1);
             return prixApresReduc;
         }

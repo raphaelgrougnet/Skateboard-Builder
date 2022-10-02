@@ -18,7 +18,7 @@ namespace TP1_420_14B_FX
 
         #region CONSTANTES
 
-        public const string CHEMIN_DOSSIER_IMAGE = @"C:\data-420-14B-FX\images\";
+        private const string CHEMIN_DOSSIER_IMAGE = @"C:\data-420-14B-FX\images\";
 
         #endregion
 
@@ -63,7 +63,14 @@ namespace TP1_420_14B_FX
             btnEnregistrer.IsEnabled = true;
             btnQuitter.IsEnabled = true;
 
+            lstProduits.Items.Clear();
+            lstSkateboards.Items.Clear();
+
             AfficherListeSkateboards();
+            
+            InitialiserDetailsSkateboard();
+            InitialiserListeProduits();
+
             AfficherProduitsCategorie(CategorieProduit.Decks);
 
         }
@@ -78,25 +85,30 @@ namespace TP1_420_14B_FX
             txtNomSkateboard.Text = "";
             txtCodeSkateboard.Text = "";
 
-            imgPlanche.Tag = null;
+            
             //todo : Ajouter l'image par défaut d'une plache "deck.png" FAIT
             imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE+"deck.png"));
             imgPlanche.IsEnabled = true;
+            imgPlanche.Tag = null;
 
             imgTrucks.Tag = null;
             //todo : Ajouter l'image par défaut des trucks "trucks.png" FAIT
             imgTrucks.IsEnabled = true;
             imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + "trucks.png"));
-            imgRoues.Tag = null;
+            imgTrucks.Tag = null;
+            
             //todo : Ajouter l'image par défaut des trucks "wheels.png" FAIT
             imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + "wheels.png"));
             imgRoues.IsEnabled = true;
+            imgRoues.Tag = null;
 
 
-            imgGrip.Tag = null;
             //todo : Ajouter l'image par défaut des trucks "grip.png" FAIT
             imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + "grip.png"));
             imgGrip.IsEnabled = true;
+            imgGrip.Tag = null;
+
+
 
             lblNomPlanche.Text = "";
             lblPrixPlanche.Content = $"{0:c2}";
@@ -158,23 +170,13 @@ namespace TP1_420_14B_FX
             //todo : Implémenter la méthode AfficherProduitsCatégories FAIT
             for (int i = 1; i < _skateBoardBuilder.Produits.Length; i++)
             {
-                switch (_skateBoardBuilder.Produits[i].Categorie)
+                if (_skateBoardBuilder.Produits[i].Categorie == categorie)
                 {
-                    case CategorieProduit.Decks:
-                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
-                        break;
-                    case CategorieProduit.Truck:
-                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
-                        break;
-                    case CategorieProduit.Wheels:
-                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
-                        break;
-                    case CategorieProduit.GripTape:
-                        lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
-                        break;
-                    
+                    lstProduits.Items.Add(_skateBoardBuilder.Produits[i]);
                 }
+                
             }
+            gpListeProduits.Header = string.Format("Liste des produis - {0}", categorie);
             
         }
 
@@ -190,27 +192,33 @@ namespace TP1_420_14B_FX
             switch (produit.Categorie)
             {
                 case CategorieProduit.Decks:
-                    imgProduit.Tag = produit;
-                    imgProduit.Source = new BitmapImage(new Uri(produit.Image));
+                    imgPlanche.Tag = produit;
+                    imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE+ produit.Image));
+                    lblNomPlanche.Text = produit.Nom;
+                    lblPrixPlanche.Content = $"{produit.Prix:c2}";
                     break;
                 case CategorieProduit.Truck:
-                    imgProduit.Tag = produit;
-                    imgProduit.Source = new BitmapImage(new Uri(produit.Image));
+                    imgTrucks.Tag = produit;
+                    imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomTrucks.Text = produit.Nom;
+                    lblPrixTrucks.Content = $"{produit.Prix:c2}";
                     break;
                 case CategorieProduit.Wheels:
-                    imgProduit.Tag = produit;
-                    imgProduit.Source = new BitmapImage(new Uri(produit.Image));
+                    imgRoues.Tag = produit;
+                    imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomRoues.Text = produit.Nom;
+                    lblPrixRoues.Content = $"{produit.Prix:c2}";
                     break;
                 case CategorieProduit.GripTape:
-                    imgProduit.Tag = produit;
-                    imgProduit.Source = new BitmapImage(new Uri(produit.Image));
+                    imgGrip.Tag = produit;
+                    imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomGrip.Text = produit.Nom;
+                    lblPrixGrip.Content = $"{produit.Prix:c2}";
                     break;
                 
             }
 
-            lblPrixProduit.Content = produit.Prix;
-            lblQuantiteProduitDispo.Content = produit.QuantiteDispo;
-            lblNomProduit.Text = produit.Nom;
+            
             
         }
 
@@ -222,39 +230,15 @@ namespace TP1_420_14B_FX
         private bool validerSkateboard()
         {
             //todo : Implémenter la méthode ValiderSkateboard FAIT
-            string messageErreur = "";
-            if (string.IsNullOrEmpty(txtNomSkateboard.Text) || txtNomSkateboard.Text.Length >25)
-            {
-                messageErreur += "Le nom ne doit pas être vide et contenir au maximum 25 caractères.\n";
-            }
-            if (imgPlanche.Tag == null)
-            {
-                messageErreur += "Vous devez sélectionner une planche.\n";
-            }
-            if (imgTrucks.Tag == null)
-            {
-                messageErreur += "Vous devez sélectionner un truck.\n";
-            }
-            if (imgRoues.Tag == null)
-            {
-                messageErreur += "Vous devez sélectionner des roues.\n";
-            }
-            if (imgGrip.Tag == null)
-            {
-                messageErreur += "Vous devez sélectionner un grip.\n";
-            }
+            
 
-            if (imgPlanche.Tag == null || imgTrucks.Tag == null || imgRoues.Tag == null || imgGrip.Tag == null)
+            if (imgPlanche.Tag == null || imgTrucks.Tag == null || imgRoues.Tag == null || imgGrip.Tag == null || String.IsNullOrWhiteSpace(txtNomSkateboard.Text))
             {
                 return false;
             }
             return true;
 
-            if (messageErreur != "")
-            {
-                MessageBox.Show(messageErreur, "Attention !", MessageBoxButton.OK);
-                return false;
-            }
+            
             
         }
 
@@ -269,14 +253,225 @@ namespace TP1_420_14B_FX
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitialiserFormulaire();
+            
         }
 
         private void btnAjouterProduit_Click(object sender, RoutedEventArgs e)
         {
+            AjouterProduit((Produit)imgProduit.Tag);
+        }
+
+        private void lstProduits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstProduits.SelectedIndex != -1)
+            {
+                btnAjouterProduit.IsEnabled = true;
+                Produit produitSelected = (Produit)lstProduits.SelectedItem;
+                lblNomProduit.Text = produitSelected.Nom;
+                lblPrixProduit.Content = $"{produitSelected.Prix:c2}";
+                lblQuantiteProduitDispo.Content = produitSelected.QuantiteDispo;
+                imgProduit.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produitSelected.Image));
+                imgProduit.Tag = produitSelected;
+            }
+            
+        }
+
+        private void lstSkateboards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstSkateboards.SelectedIndex != -1)
+            {
+                Skateboard skate = (Skateboard)lstSkateboards.SelectedItem;
+                txtNomSkateboard.Text = skate.Nom;
+                txtCodeSkateboard.Text = skate.Code;
+                lblNomPlanche.Text = skate.Planche.Nom;
+                lblNomTrucks.Text = skate.Trucks.Nom;
+                lblNomRoues.Text = skate.Roues.Nom;
+                lblNomGrip.Text = skate.Grip.Nom;
+
+                lblPrixPlanche.Content = $"{skate.Planche.Prix:c2}";
+                lblPrixTrucks.Content = $"{skate.Trucks.Prix:c2}";
+                lblPrixRoues.Content = $"{skate.Roues.Prix:c2}";
+                lblPrixGrip.Content = $"{skate.Grip.Prix:c2}";
+
+                lblMontantReduction.Content = $"{((skate.Planche.Prix + skate.Trucks.Prix + skate.Roues.Prix + skate.Grip.Prix) * (decimal)0.1):c2}";
+                lblPrixVente.Content = $"{skate.PrixVente:c2}";
+
+                lstProduits.Items.Clear();
+
+                imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + skate.Planche.Image));
+                imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + skate.Trucks.Image));
+                imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + skate.Roues.Image));
+                imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + skate.Grip.Image));
+                imgProduit.Source = null;
+                lblPrixProduit.Content = "";
+                lblNomProduit.Text = "";
+                lblQuantiteProduitDispo.Content = "";
+
+                btnAjouter.IsEnabled = false;
+                btnVendu.IsEnabled = true;
+                btnDesassembler.IsEnabled = true;
+
+
+            }
+            
+        }
+
+        private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnQuitter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnValeurTotal_Click(object sender, RoutedEventArgs e)
+        {
+            decimal valTot = 0;
+            for (int i = 0; i < _skateBoardBuilder.Skateboards.Length; i++)
+            {
+                if (_skateBoardBuilder.Skateboards[i] != null)
+                {
+                    valTot += _skateBoardBuilder.Skateboards[i].PrixVente;
+                }
+                
+            }
+            MessageBox.Show($"La valeur des skateboards est de {valTot:c2}", "Valeur des skateboards", MessageBoxButton.OK);
+        }
+
+        private void btnVendu_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstSkateboards.SelectedIndex != -1 && lstSkateboards.SelectedItem != null)
+            {
+                bool supr = _skateBoardBuilder.SupprimerSkateboard((Skateboard)lstSkateboards.SelectedItem);
+                if (supr)
+                {
+                    lstSkateboards.Items.Clear();
+                    AfficherListeSkateboards();
+                    MessageBox.Show($"Le skateboard sélectionné a bien été vendu !", "Vente de skateboard", MessageBoxButton.OK);
+                    InitialiserFormulaire();
+                }
+                else
+                {
+                    MessageBox.Show($"Le skateboard n'a pas pu être vendu suite a une erreur", "Vente de skateboard", MessageBoxButton.OK);
+                    InitialiserFormulaire();
+                }
+            }
+            
+        }
+
+        private void btnDesassembler_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAjouter_Click(object sender, RoutedEventArgs e)
+        {
             if (validerSkateboard())
             {
                 _skateBoardBuilder.AjouterSkateboard(txtNomSkateboard.Text, (Produit)imgPlanche.Tag, (Produit)imgTrucks.Tag, (Produit)imgRoues.Tag, (Produit)imgGrip.Tag);
+                lstSkateboards.Items.Clear();
+
+                AfficherListeSkateboards();
+                btnDesassembler.IsEnabled = false;
+                btnAjouter.IsEnabled = false;
+                btnAjouterProduit.IsEnabled = false;
+                lblNomProduit.Text = "";
+                lblPrixProduit.Content = "";
+                lblQuantiteProduitDispo.Content = "";
+                imgProduit.Source = null;
+                lstProduits.Items.Clear();
+                InitialiserDetailsSkateboard();
+                AfficherProduitsCategorie(CategorieProduit.Decks);
+                MessageBox.Show("La création du skateboard à fonctionné avec succès.", "Ajout d'un skateboard", MessageBoxButton.OK);
+            }
+            else
+            {
+                string messageErreur = "";
+                if (string.IsNullOrEmpty(txtNomSkateboard.Text) || txtNomSkateboard.Text.Length > 25)
+                {
+                    messageErreur += "Le nom ne doit pas être vide et contenir au maximum 25 caractères.\n";
+                }
+                if (imgPlanche.Tag == null)
+                {
+                    messageErreur += "Vous devez sélectionner une planche.\n";
+                }
+                if (imgTrucks.Tag == null)
+                {
+                    messageErreur += "Vous devez sélectionner un truck.\n";
+                }
+                if (imgRoues.Tag == null)
+                {
+                    messageErreur += "Vous devez sélectionner des roues.\n";
+                }
+                if (imgGrip.Tag == null)
+                {
+                    messageErreur += "Vous devez sélectionner un grip.\n";
+                }
+
+                if (messageErreur != "")
+                {
+                    MessageBox.Show(messageErreur, "Attention !", MessageBoxButton.OK);
+
+                }
             }
         }
+
+        private void btnNouveau_Click(object sender, RoutedEventArgs e)
+        {
+            
+            InitialiserFormulaire();
+        }
+
+        private void imgPlanche_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (lstSkateboards.SelectedIndex == -1)
+            {
+                InitialiserListeProduits();
+                lstProduits.SelectedIndex = -1;
+                lstProduits.Items.Clear();
+                AfficherProduitsCategorie(CategorieProduit.Decks);
+            }
+            
+        }
+
+        private void imgTrucks_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (lstSkateboards.SelectedIndex == -1)
+            {
+                InitialiserListeProduits();
+                lstProduits.SelectedIndex = -1;
+                lstProduits.Items.Clear();
+                AfficherProduitsCategorie(CategorieProduit.Truck);
+            }
+            
+        }
+
+        private void imgRoues_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (lstSkateboards.SelectedIndex==-1)
+            {
+                InitialiserListeProduits();
+                lstProduits.SelectedIndex = -1;
+                lstProduits.Items.Clear();
+                AfficherProduitsCategorie(CategorieProduit.Wheels);
+            }
+            
+        }
+
+        private void imgGrip_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (lstSkateboards.SelectedIndex==-1)
+            {
+                InitialiserListeProduits();
+                lstProduits.SelectedIndex = -1;
+                lstProduits.Items.Clear();
+                AfficherProduitsCategorie(CategorieProduit.GripTape);
+            }
+            
+        }
+
+        
     }
 }
