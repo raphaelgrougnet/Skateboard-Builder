@@ -172,7 +172,7 @@ namespace TP1_420_14B_FX
             lstProduits.SelectedIndex = -1;
             lstProduits.Items.Clear();
             //todo : Implémenter la méthode AfficherProduitsCatégories FAIT
-            for (int i = 1; i < _skateBoardBuilder.Produits.Length; i++)
+            for (int i = 0; i < _skateBoardBuilder.Produits.Length-1; i++)
             {
                 if (_skateBoardBuilder.Produits[i].Categorie == categorie)
                 {
@@ -180,7 +180,7 @@ namespace TP1_420_14B_FX
                 }
                 
             }
-            gpListeProduits.Header = string.Format("Liste des produis - {0}", categorie);
+            gpListeProduits.Header = string.Format("Liste des produits - {0}", categorie);
             
         }
 
@@ -193,42 +193,38 @@ namespace TP1_420_14B_FX
         private void AjouterProduit(Produit produit)
         {
             //todo: Implémenter la méthode AjouterProduit FAIT
-            if (produit.QuantiteDispo > 0)
+            
+            switch (produit.Categorie)
             {
-                switch (produit.Categorie)
-                {
-                    case CategorieProduit.Decks:
+                case CategorieProduit.Decks:
 
-                        imgPlanche.Tag = produit;
-                        imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                        lblNomPlanche.Text = produit.Nom;
-                        lblPrixPlanche.Content = $"{produit.Prix:c2}";
-                        break;
-                    case CategorieProduit.Truck:
-                        imgTrucks.Tag = produit;
-                        imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                        lblNomTrucks.Text = produit.Nom;
-                        lblPrixTrucks.Content = $"{produit.Prix:c2}";
-                        break;
-                    case CategorieProduit.Wheels:
-                        imgRoues.Tag = produit;
-                        imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                        lblNomRoues.Text = produit.Nom;
-                        lblPrixRoues.Content = $"{produit.Prix:c2}";
-                        break;
-                    case CategorieProduit.GripTape:
-                        imgGrip.Tag = produit;
-                        imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                        lblNomGrip.Text = produit.Nom;
-                        lblPrixGrip.Content = $"{produit.Prix:c2}";
-                        break;
+                    imgPlanche.Tag = produit;
+                    imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomPlanche.Text = produit.Nom;
+                    lblPrixPlanche.Content = $"{produit.Prix:c2}";
+                    break;
+                case CategorieProduit.Truck:
+                    imgTrucks.Tag = produit;
+                    imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomTrucks.Text = produit.Nom;
+                    lblPrixTrucks.Content = $"{produit.Prix:c2}";
+                    break;
+                case CategorieProduit.Wheels:
+                    imgRoues.Tag = produit;
+                    imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomRoues.Text = produit.Nom;
+                    lblPrixRoues.Content = $"{produit.Prix:c2}";
+                    break;
+                case CategorieProduit.GripTape:
+                    imgGrip.Tag = produit;
+                    imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                    lblNomGrip.Text = produit.Nom;
+                    lblPrixGrip.Content = $"{produit.Prix:c2}";
+                    break;
 
-                }
             }
-            else
-            {
-                MessageBox.Show("Stock vide, impossible d'ajouter le produit", "Ajouter un produit", MessageBoxButton.OK);
-            }
+            
+            
             
 
             
@@ -276,8 +272,10 @@ namespace TP1_420_14B_FX
 
         private void lstProduits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Produit prodSelect =(Produit) lstProduits.SelectedItem;
             if (lstProduits.SelectedIndex != -1)
             {
+
                 btnAjouterProduit.IsEnabled = true;
                 Produit produitSelected = (Produit)lstProduits.SelectedItem;
                 lblNomProduit.Text = produitSelected.Nom;
@@ -285,6 +283,10 @@ namespace TP1_420_14B_FX
                 lblQuantiteProduitDispo.Content = produitSelected.QuantiteDispo;
                 imgProduit.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produitSelected.Image));
                 imgProduit.Tag = produitSelected;
+            }
+            if (prodSelect.QuantiteDispo < 1)
+            {
+                btnAjouterProduit.IsEnabled = false;
             }
             
         }

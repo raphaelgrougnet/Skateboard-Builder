@@ -51,7 +51,7 @@ namespace TP1_420_14B_FX.classes
         private Produit[] ChargerProduits()
         {
             string[] vectProduitsString = Utilitaire.ChargerDonnees(CHEMIN_FICHIERS_PRODUITS);
-            Produit[] vectProduits = new Produit[vectProduitsString.Length - 1]; //Retire la première ligne
+            Produit[] vectProduits = new Produit[vectProduitsString.Length ]; //Retire la première ligne
             CategorieProduit categorie = CategorieProduit.Decks;
             string[] vectProduitsVect;
             for (int i = 0; i < vectProduitsString.Length-1; i++)
