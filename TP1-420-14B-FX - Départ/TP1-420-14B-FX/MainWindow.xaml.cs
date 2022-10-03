@@ -168,6 +168,9 @@ namespace TP1_420_14B_FX
         /// <param name="categorie">Catégorie de produit à afficher</param>
         private void AfficherProduitsCategorie(CategorieProduit categorie)
         {
+            InitialiserListeProduits();
+            lstProduits.SelectedIndex = -1;
+            lstProduits.Items.Clear();
             //todo : Implémenter la méthode AfficherProduitsCatégories FAIT
             for (int i = 1; i < _skateBoardBuilder.Produits.Length; i++)
             {
@@ -491,9 +494,7 @@ namespace TP1_420_14B_FX
         {
             if (lstSkateboards.SelectedIndex == -1)
             {
-                InitialiserListeProduits();
-                lstProduits.SelectedIndex = -1;
-                lstProduits.Items.Clear();
+                
                 AfficherProduitsCategorie(CategorieProduit.Decks);
             }
             
@@ -503,9 +504,7 @@ namespace TP1_420_14B_FX
         {
             if (lstSkateboards.SelectedIndex == -1)
             {
-                InitialiserListeProduits();
-                lstProduits.SelectedIndex = -1;
-                lstProduits.Items.Clear();
+                
                 AfficherProduitsCategorie(CategorieProduit.Truck);
             }
             
@@ -515,9 +514,7 @@ namespace TP1_420_14B_FX
         {
             if (lstSkateboards.SelectedIndex==-1)
             {
-                InitialiserListeProduits();
-                lstProduits.SelectedIndex = -1;
-                lstProduits.Items.Clear();
+                
                 AfficherProduitsCategorie(CategorieProduit.Wheels);
             }
             
@@ -527,9 +524,7 @@ namespace TP1_420_14B_FX
         {
             if (lstSkateboards.SelectedIndex==-1)
             {
-                InitialiserListeProduits();
-                lstProduits.SelectedIndex = -1;
-                lstProduits.Items.Clear();
+                
                 AfficherProduitsCategorie(CategorieProduit.GripTape);
             }
             
