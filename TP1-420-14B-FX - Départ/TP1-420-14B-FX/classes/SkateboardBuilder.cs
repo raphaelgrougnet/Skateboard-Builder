@@ -407,7 +407,8 @@ namespace TP1_420_14B_FX.classes
         public void EnregistrerProduit()
         {
             string donnees = "Code;Nom;Categorie;Quantite;Prix;Image\n";
-            for (int i = 0; i < Produits.Length; i++)
+
+            for (int i = 0; i < Produits.Length-1; i++)
             {
                 string categorie = "";
                 switch (Produits[i].Categorie)
