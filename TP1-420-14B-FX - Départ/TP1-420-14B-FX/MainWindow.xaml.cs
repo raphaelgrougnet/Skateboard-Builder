@@ -25,6 +25,7 @@ namespace TP1_420_14B_FX
         #region ATTRIBUTS
 
         private SkateboardBuilder _skateBoardBuilder = new SkateboardBuilder();
+        private bool modif = false;
 
         #endregion
 
@@ -318,12 +319,38 @@ namespace TP1_420_14B_FX
 
         private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
         {
-
+            _skateBoardBuilder.EnregistrerProduit();
+            _skateBoardBuilder.EnregistrerSkateboard();
+            modif = false;
         }
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
         {
+            if (modif)
+            {
+                MessageBoxResult messageResult = MessageBox.Show("Voulez sauvegarder les modifications avant de quitter ?", "Quitter l'application", MessageBoxButton.YesNoCancel);
 
+                switch (messageResult)
+                {
+                    
+                    
+                    case MessageBoxResult.Cancel:
+                        break;
+                    case MessageBoxResult.Yes:
+                        _skateBoardBuilder.EnregistrerProduit();
+                        _skateBoardBuilder.EnregistrerSkateboard();
+                        Close();
+                        break;
+                    case MessageBoxResult.No:
+                        Close();
+                        break;
+                    
+                }
+            }
+            else
+            {
+                Close();
+            }
         }
 
         private void btnValeurTotal_Click(object sender, RoutedEventArgs e)
@@ -358,12 +385,38 @@ namespace TP1_420_14B_FX
                     InitialiserFormulaire();
                 }
             }
+
+            modif = true;
             
         }
 
         private void btnDesassembler_Click(object sender, RoutedEventArgs e)
         {
-
+            if (lstSkateboards.SelectedIndex != -1 && lstSkateboards.SelectedItem != null)
+            {
+                Skateboard skate = (Skateboard)lstSkateboards.SelectedItem;
+                
+                bool supr = _skateBoardBuilder.SupprimerSkateboard(skate);
+                if (supr)
+                {
+                    skate.Planche.AjouterQuantiteInventaire(1);
+                    skate.Trucks.AjouterQuantiteInventaire(1);
+                    skate.Roues.AjouterQuantiteInventaire(1);
+                    skate.Grip.AjouterQuantiteInventaire(1);
+                    lstSkateboards.Items.Clear();
+                    AfficherListeSkateboards();
+                    lstProduits.Items.Clear();
+                    
+                    MessageBox.Show($"Le skateboard sélectionné a bien été désassemblé !", "Désassemblage de skateboard", MessageBoxButton.OK);
+                    InitialiserFormulaire();
+                    modif = true;
+                }
+                else
+                {
+                    MessageBox.Show($"Le skateboard n'a pas pu être désassemblé suite a une erreur", "Désassemblage de skateboard", MessageBoxButton.OK);
+                    InitialiserFormulaire();
+                }
+            }
         }
 
         private void btnAjouter_Click(object sender, RoutedEventArgs e)
@@ -385,6 +438,7 @@ namespace TP1_420_14B_FX
                 InitialiserDetailsSkateboard();
                 AfficherProduitsCategorie(CategorieProduit.Decks);
                 MessageBox.Show("La création du skateboard à fonctionné avec succès.", "Ajout d'un skateboard", MessageBoxButton.OK);
+                modif = true;
             }
             else
             {

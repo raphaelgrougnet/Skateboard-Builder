@@ -99,7 +99,7 @@ namespace TP1_420_14B_FX.classes
         public Produit RechercherProduit(uint codeProduit)
         {
             Produit[] vectProduits = ChargerProduits();
-            for (int i = 1; i < vectProduits.Length; i++)
+            for (int i = 0; i < vectProduits.Length; i++)
             {
                 if (codeProduit == vectProduits[i].Code)
                 {
@@ -121,13 +121,21 @@ namespace TP1_420_14B_FX.classes
         private Skateboard[] ChargerSkateboards()
         {
             string[] vectSkateboardsString = Utilitaire.ChargerDonnees(CHEMIN_FICHIERS_SKATEBOARDS);
-            Skateboard[] vectSkateboards = new Skateboard[vectSkateboardsString.Length]; //Retire la première ligne
+            Skateboard[] vectSkateboards = new Skateboard[vectSkateboardsString.Length-1]; //Retire la première ligne
             Produit[] vectProduits = ChargerProduits();
             string[] vectSkateboardsVect;
             for (int i = 0; i < vectSkateboardsString.Length-1; i++)
             {
                 vectSkateboardsVect = vectSkateboardsString[i].Split(';');
-                vectSkateboards[i] = new Skateboard(vectSkateboardsVect[0], vectSkateboardsVect[1], RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[2])), RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[3])), RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[4])), RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[5])));
+                string code = vectSkateboardsVect[0];
+                string nom = vectSkateboardsVect[1];
+                Produit planche = RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[2]));
+                Produit trucks = RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[3]));
+                Produit roues = RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[4]));
+                Produit grip = RechercherProduit(Convert.ToUInt32(vectSkateboardsVect[5]));
+
+                
+                vectSkateboards[i] = new Skateboard(code,nom ,planche ,trucks ,roues , grip );
             }
             int count = 0;
             for (int i = 0; i < vectSkateboards.Length; i++)
@@ -165,7 +173,7 @@ namespace TP1_420_14B_FX.classes
             if (vectSkateboardsBase.Length > 0)
             {
                 vectSkateboardsNew = new Skateboard[vectSkateboardsBase.Length + 1];
-                for (int i = 0; i < vectSkateboardsBase.Length - 1; i++)
+                for (int i = 0; i < vectSkateboardsBase.Length; i++)
                 {
                     vectSkateboardsNew[i] = vectSkateboardsBase[i];
                 }
@@ -297,31 +305,31 @@ namespace TP1_420_14B_FX.classes
         /// <returns>Retourne vrai si le skateboard a bien été retiré de la liste. Sinon retourne faux.</returns>
         public bool SupprimerSkateboard(Skateboard skateboard)
         {
-            Skateboard[] vectSkateboardsBase = this.Skateboards;
+            
             bool valide = true;
-            for (int i = 0; i < vectSkateboardsBase.Length; i++)
+            for (int i = 0; i < Skateboards.Length; i++)
             {
-                if (vectSkateboardsBase[i].Code == skateboard.Code)
+                if (Skateboards[i].Code == skateboard.Code)
                 {
-                    vectSkateboardsBase[i] = null;
+                    Skateboards[i] = null;
                 }
             }
 
             int nbVide = 0;
-            for (int i = 0; i < vectSkateboardsBase.Length; i++)
+            for (int i = 0; i < Skateboards.Length; i++)
             {
-                if (vectSkateboardsBase[i] != null)
+                if (Skateboards[i] != null)
                 {
                     nbVide++;
                 }
             }
             Skateboard[] vectSkateboardsNew = new Skateboard[nbVide];
             int incrementeur = 0;
-            for (int i = 0; i < vectSkateboardsBase.Length; i++)
+            for (int i = 0; i < Skateboards.Length; i++)
             {
-                if (vectSkateboardsBase[i] != null)
+                if (Skateboards[i] != null)
                 {
-                    vectSkateboardsNew[incrementeur] = vectSkateboardsBase[i];
+                    vectSkateboardsNew[incrementeur] = Skateboards[i];
                     incrementeur++;
                 }
             }
@@ -432,7 +440,7 @@ namespace TP1_420_14B_FX.classes
             string donnees = "Code;Nom;Planche;Trucks;Roues;Griptape\n";
             for (int i = 0; i < Skateboards.Length; i++)
             {
-                donnees += String.Format("{0};{1};{2};{3};{4};{5}\n", Skateboards[i].Code, Skateboards[i].Nom, Skateboards[i].Planche, Skateboards[i].Trucks, Skateboards[i].Roues, Skateboards[i].Grip);
+                donnees += String.Format("{0};{1};{2};{3};{4};{5}\n", Skateboards[i].Code, Skateboards[i].Nom, Skateboards[i].Planche.Code, Skateboards[i].Trucks.Code, Skateboards[i].Roues.Code, Skateboards[i].Grip.Code);
             }
 
             Utilitaire.EnregistrerDonnees(CHEMIN_FICHIERS_SKATEBOARDS, donnees);
