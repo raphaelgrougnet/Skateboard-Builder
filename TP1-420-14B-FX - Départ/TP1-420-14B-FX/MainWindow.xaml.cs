@@ -272,10 +272,10 @@ namespace TP1_420_14B_FX
 
         private void lstProduits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Produit prodSelect =(Produit) lstProduits.SelectedItem;
+            
             if (lstProduits.SelectedIndex != -1)
             {
-
+                
                 btnAjouterProduit.IsEnabled = true;
                 Produit produitSelected = (Produit)lstProduits.SelectedItem;
                 lblNomProduit.Text = produitSelected.Nom;
@@ -284,11 +284,19 @@ namespace TP1_420_14B_FX
                 imgProduit.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produitSelected.Image));
                 imgProduit.Tag = produitSelected;
             }
-            if (prodSelect.QuantiteDispo < 1)
+            if (lstProduits.SelectedIndex > -1)
             {
-                btnAjouterProduit.IsEnabled = false;
+                if (((Produit)lstProduits.SelectedItem).QuantiteDispo > 0)
+                {
+                    btnAjouterProduit.IsEnabled = true;
+                }
+                else
+                {
+                    btnAjouterProduit.IsEnabled = false;
+                }
             }
             
+
         }
 
         private void lstSkateboards_SelectionChanged(object sender, SelectionChangedEventArgs e)
