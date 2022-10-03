@@ -190,34 +190,43 @@ namespace TP1_420_14B_FX
         private void AjouterProduit(Produit produit)
         {
             //todo: Implémenter la méthode AjouterProduit FAIT
-            switch (produit.Categorie)
+            if (produit.QuantiteDispo > 0)
             {
-                case CategorieProduit.Decks:
-                    imgPlanche.Tag = produit;
-                    imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE+ produit.Image));
-                    lblNomPlanche.Text = produit.Nom;
-                    lblPrixPlanche.Content = $"{produit.Prix:c2}";
-                    break;
-                case CategorieProduit.Truck:
-                    imgTrucks.Tag = produit;
-                    imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                    lblNomTrucks.Text = produit.Nom;
-                    lblPrixTrucks.Content = $"{produit.Prix:c2}";
-                    break;
-                case CategorieProduit.Wheels:
-                    imgRoues.Tag = produit;
-                    imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                    lblNomRoues.Text = produit.Nom;
-                    lblPrixRoues.Content = $"{produit.Prix:c2}";
-                    break;
-                case CategorieProduit.GripTape:
-                    imgGrip.Tag = produit;
-                    imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
-                    lblNomGrip.Text = produit.Nom;
-                    lblPrixGrip.Content = $"{produit.Prix:c2}";
-                    break;
-                
+                switch (produit.Categorie)
+                {
+                    case CategorieProduit.Decks:
+
+                        imgPlanche.Tag = produit;
+                        imgPlanche.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                        lblNomPlanche.Text = produit.Nom;
+                        lblPrixPlanche.Content = $"{produit.Prix:c2}";
+                        break;
+                    case CategorieProduit.Truck:
+                        imgTrucks.Tag = produit;
+                        imgTrucks.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                        lblNomTrucks.Text = produit.Nom;
+                        lblPrixTrucks.Content = $"{produit.Prix:c2}";
+                        break;
+                    case CategorieProduit.Wheels:
+                        imgRoues.Tag = produit;
+                        imgRoues.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                        lblNomRoues.Text = produit.Nom;
+                        lblPrixRoues.Content = $"{produit.Prix:c2}";
+                        break;
+                    case CategorieProduit.GripTape:
+                        imgGrip.Tag = produit;
+                        imgGrip.Source = new BitmapImage(new Uri(CHEMIN_DOSSIER_IMAGE + produit.Image));
+                        lblNomGrip.Text = produit.Nom;
+                        lblPrixGrip.Content = $"{produit.Prix:c2}";
+                        break;
+
+                }
             }
+            else
+            {
+                MessageBox.Show("Stock vide, impossible d'ajouter le produit", "Ajouter un produit", MessageBoxButton.OK);
+            }
+            
 
             
             
@@ -443,9 +452,9 @@ namespace TP1_420_14B_FX
             else
             {
                 string messageErreur = "";
-                if (string.IsNullOrEmpty(txtNomSkateboard.Text) || txtNomSkateboard.Text.Length > 25)
+                if (string.IsNullOrEmpty(txtNomSkateboard.Text) || txtNomSkateboard.Text.Length > Skateboard.NOM_NB_CARACT_MAX)
                 {
-                    messageErreur += "Le nom ne doit pas être vide et contenir au maximum 25 caractères.\n";
+                    messageErreur += $"Le nom ne doit pas être vide et contenir au maximum {Skateboard.NOM_NB_CARACT_MAX} caractères.\n";
                 }
                 if (imgPlanche.Tag == null)
                 {
