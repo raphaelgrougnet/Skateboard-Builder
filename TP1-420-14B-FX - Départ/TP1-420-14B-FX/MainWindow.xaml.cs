@@ -344,6 +344,7 @@ namespace TP1_420_14B_FX
             _skateBoardBuilder.EnregistrerProduit();
             _skateBoardBuilder.EnregistrerSkateboard();
             modif = false;
+            MessageBox.Show("L'enregistrement des modifications s'est bien effectuée !", "Enregistrement des modifications", MessageBoxButton.OK);
         }
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
