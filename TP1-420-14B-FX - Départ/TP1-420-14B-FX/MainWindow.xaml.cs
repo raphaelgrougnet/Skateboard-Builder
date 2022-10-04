@@ -241,7 +241,7 @@ namespace TP1_420_14B_FX
             //todo : Implémenter la méthode ValiderSkateboard FAIT
             
 
-            if (imgPlanche.Tag == null || imgTrucks.Tag == null || imgRoues.Tag == null || imgGrip.Tag == null || String.IsNullOrWhiteSpace(txtNomSkateboard.Text))
+            if (imgPlanche.Tag == null || imgTrucks.Tag == null || imgRoues.Tag == null || imgGrip.Tag == null || String.IsNullOrWhiteSpace(txtNomSkateboard.Text) || txtNomSkateboard.Text.Trim().Length > Skateboard.NOM_NB_CARACT_MAX || txtNomSkateboard.Text.Trim().Length < Skateboard.NOM_NB_CARACT_MIN)
             {
                 return false;
             }
@@ -465,9 +465,9 @@ namespace TP1_420_14B_FX
             else
             {
                 string messageErreur = "";
-                if (string.IsNullOrEmpty(txtNomSkateboard.Text) || txtNomSkateboard.Text.Length > Skateboard.NOM_NB_CARACT_MAX)
+                if (string.IsNullOrEmpty(txtNomSkateboard.Text) || txtNomSkateboard.Text.Trim().Length > Skateboard.NOM_NB_CARACT_MAX ||txtNomSkateboard.Text.Trim().Length < Skateboard.NOM_NB_CARACT_MIN)
                 {
-                    messageErreur += $"Le nom ne doit pas être vide et contenir au maximum {Skateboard.NOM_NB_CARACT_MAX} caractères.\n";
+                    messageErreur += $"Le nom ne doit pas être vide et contenir au minimum {Skateboard.NOM_NB_CARACT_MIN} caractères et au maximum {Skateboard.NOM_NB_CARACT_MAX} caractères.\n";
                 }
                 if (imgPlanche.Tag == null)
                 {
